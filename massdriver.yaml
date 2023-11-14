@@ -1,0 +1,78 @@
+schema: draft-07
+name: "k8s-qdrant"
+description: "Qdrant is a vector similarity search engine. Vector databases are a relatively new way for interacting with abstract data representations derived from opaque machine learning models such as deep learning architectures."
+source_url: github.com/massdriver-cloud/k8s-qdrant
+access: private
+type: infrastructure
+
+params:
+  required:
+    - namespace
+    - instance_configuration
+    - replica_configuration
+  properties:
+    namespace:
+      type: string
+      title: Namespace
+      description: Choose a namespace for Elasticsearch.
+      pattern: "^[a-z]{1,}[a-z0-9-]{0,62}$"
+      message:
+        pattern: Namespace can only contain lowercase letters, numbers, and hyphens, with a max of 63 characters.
+    instance_configuration:
+      type: object
+      title: Instance Configuration
+      properties:
+        cpu_limit:
+          type: number
+          title: CPU Limit
+          description: Unit is in CPUs. Decimal numbers are allowed (3 digits of precision). Value must be between 0.5 and 32.
+          minimum: 0.5
+          maximum: 32
+        memory_limit:
+          type: number
+          title: Memory Limit
+          description: Unit is Gi. Decimal numbers are allowed. Value must be between 0.5 and 64
+          minimum: 0.5
+          maximum: 64
+    replica_configuration:
+      type: object
+      title: Replica Configuration
+      properties:
+        replicas:
+          type: integer
+          title: Replicas
+          description: Number of replicas to create. Must be an integer between 1 and 5.
+          minimum: 1
+          maximum: 5
+
+connections:
+  required:
+  - kubernetes_cluster
+  properties:
+    kubernetes_cluster:
+      $ref: massdriver/kubernetes-cluster
+
+
+artifacts:
+  properties: {}
+  # required:
+  #   - authentication
+  # properties:
+  #   authentication:
+  #     $ref: massdriver/qdrant-authentication
+
+ui:
+  ui:order:
+    - namespace
+    - instance_configuration
+    - replica_configuration
+    - "*"
+  instance_configuration:
+    ui:order:
+      - cpu_limit
+      - memory_limit
+      - "*"
+  replica_configuration:
+    ui:order:
+      - replicas
+      - "*"

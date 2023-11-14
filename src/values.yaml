@@ -1,0 +1,4 @@
+image:
+  repository: qdrant/qdrant
+  pullPolicy: Always
+  tag: latest
