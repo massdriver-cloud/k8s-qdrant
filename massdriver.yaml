@@ -1,0 +1,104 @@
+schema: draft-07
+name: "k8s-qdrant"
+description: "Qdrant is a vector similarity search engine. Vector databases are a relatively new way for interacting with abstract data representations derived from opaque machine learning models such as deep learning architectures."
+source_url: github.com/massdriver-cloud/k8s-qdrant
+access: public
+type: infrastructure
+
+params:
+  required:
+    - namespace
+    - database
+  properties:
+    namespace:
+      type: string
+      title: Namespace
+      description: Choose a namespace for Elasticsearch.
+      pattern: "^[a-z]{1,}[a-z0-9-]{0,62}$"
+      message:
+        pattern: Namespace can only contain lowercase letters, numbers, and hyphens, with a max of 63 characters.
+    database:
+      type: object
+      title: Database Configuration
+      required:
+        - instance_configuration
+        - replica_configuration
+      properties:
+        instance_configuration:
+          type: object
+          title: Instance Configuration
+          required:
+            - cpu_limit
+            - memory_limit
+            - storage_size
+          properties:
+            cpu_limit:
+              type: number
+              title: CPU Limit
+              description: Unit is in CPUs. Decimal numbers are allowed (3 digits of precision). Value must be between 0.5 and 32.
+              minimum: 0.5
+              maximum: 32
+            memory_limit:
+              type: integer
+              title: Memory Limit
+              description: Select memory limit and conversion unit. **Minimum is 50MB**.
+              minimum: 50000000
+            storage_size:
+              type: number
+              title: Storage Size
+              description: Unit is Gi. Decimal numbers are allowed. Value must be between 1 and 1000. **Cannot be changed after creation.**
+              minimum: 1
+              maximum: 1000
+              $md.immutable: true
+        replica_configuration:
+          type: object
+          title: Replica Configuration
+          properties:
+            replicas:
+              type: integer
+              title: Replicas
+              description: Number of replicas to create. Must be an integer between 1 and 5.
+              enum:
+                - 1
+                - 2
+                - 3
+                - 4
+                - 5
+
+connections:
+  required:
+  - kubernetes_cluster
+  properties:
+    kubernetes_cluster:
+      $ref: massdriver/kubernetes-cluster
+
+artifacts:
+  required:
+    - qdrant_authentication
+  properties:
+    qdrant_authentication:
+      $ref: massdriver/qdrant-authentication
+
+ui:
+  ui:order:
+    - namespace
+    - database
+    - "*"
+  database:
+    ui:order:
+      - instance_configuration
+      - replica_configuration
+      - "*"
+    instance_configuration:
+      ui:order:
+        - cpu_limit
+        - memory_limit
+        - storage_size
+        - "*"
+      memory_limit:
+        ui:field: conversionFieldData
+        unit: Bytes
+    replica_configuration:
+      ui:order:
+        - replicas
+        - "*"

@@ -1,0 +1,12 @@
+image:
+  repository: qdrant/qdrant
+  pullPolicy: Always
+  tag: latest
+
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 3
+  successThreshold: 1
