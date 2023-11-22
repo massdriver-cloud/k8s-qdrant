@@ -1,5 +1,55 @@
-# Operator Guide
+# qdrant-vector-database
+The Qdrant Vector Database on Kubernetes is a powerful, scalable, and efficient vector similarity search engine. It's designed for high-performance similarity search operations across high-dimensional vector spaces, which is crucial for applications in machine learning, such as semantic search, recommendation systems, and many others.
 
-This is the guide for your bundle. It will appear under the `guide` button in Massdriver.
+## Use Cases
+### Semantic Search
+Qdrant enables semantic search across large datasets by indexing vectors representing complex entities like text, images, and audio for quick similarity assessments.
 
-Use it to describe to users how the bundle works, use cases for the bundle, and examples.
+### Recommendation Systems
+By leveraging vector similarity, Qdrant can power recommendation engines, providing users with items similar to their interests or previous actions.
+
+### Machine Learning Operations
+Machine learning models can generate and query vectors in real-time to deliver predictions and insights at scale, supported by Qdrant's robust backend.
+
+## Design
+### Scalability
+Qdrant is designed to scale horizontally, enabling it to handle growing datasets and query volumes with ease.
+
+### High-availability
+Leverages Kubernetes' native features to ensure high availability, distributing the service across multiple nodes.
+
+### Efficiency
+Employs state-of-the-art indexing and querying algorithms to provide fast and accurate vector searches.
+
+## Features
+### Payload Indexing
+Alongside vector data, Qdrant indexes payloads for rich, context-aware search capabilities.
+
+### Approximate Nearest Neighbors
+Implements HNSW for efficient nearest neighbor searches in high-dimensional spaces.
+
+### Multimodal Search
+Supports multiple vector types within the same dataset, accommodating complex use cases.
+
+## Best Practices
+### Index Management
+Regularly monitor and manage indexes to maintain query performance and accuracy.
+
+### Data Persistence
+Ensure proper backup and restore strategies are in place to prevent data loss.
+
+### Resource Allocation
+Allocate sufficient resources for the Qdrant service based on the workload requirements to maintain performance.
+
+## Security
+### Data Encryption
+Utilize Kubernetes secrets for sensitive data and ensure encryption for data at rest and in transit.
+
+## Observability
+### Monitoring
+Integrate with Kubernetes monitoring tools (Prometheus) to track the health and performance of the Qdrant service.
+
+## Trade-offs
+* While Qdrant excels at similarity search, it is not intended for general-purpose database operations.
+* Real-time updates to large datasets can impact query performance and should be managed accordingly.
+* Resizing the persistent storage is currently not supported.
