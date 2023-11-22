@@ -41,8 +41,8 @@ params:
             memory_limit:
               type: integer
               title: Memory Limit
-              description: Select memory limit and conversion unit. **Minimum is 2MB**.
-              minimum: 2000000
+              description: Select memory limit and conversion unit. **Minimum is 50MB**.
+              minimum: 50000000
             storage_size:
               type: number
               title: Storage Size
