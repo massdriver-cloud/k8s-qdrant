@@ -1,7 +1,7 @@
 locals {
   data_authentication = {
     api_key  = random_password.api-key.result
-    hostname = "${local.release}-master.${var.namespace}.svc.cluster.local"
+    hostname = "${local.release}.${var.namespace}.svc.cluster.local"
     port     = 6333
   }
 }
