@@ -17,7 +17,7 @@ Qdrant is a vector similarity search engine. Vector databases are a relatively n
 
 ## Design
 
-For detailed information, check out our [Operator Guide](operator.mdx) for this bundle.
+For detailed information, check out our [Operator Guide](operator.md) for this bundle.
 
 ## Usage
 
