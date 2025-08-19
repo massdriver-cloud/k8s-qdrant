@@ -3,7 +3,6 @@ name: k8s-qdrant
 version: 1.0.0
 description: Qdrant is a vector similarity search engine. Vector databases are a relatively new way for interacting with abstract data representations derived from opaque machine learning models such as deep learning architectures.
 source_url: https://github.com/massdriver-cloud/k8s-qdrant
-type: application
 params:
   required:
   - namespace
