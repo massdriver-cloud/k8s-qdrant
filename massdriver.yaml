@@ -1,14 +1,13 @@
 schema: draft-07
-name: "k8s-qdrant"
-description: "Qdrant is a vector similarity search engine. Vector databases are a relatively new way for interacting with abstract data representations derived from opaque machine learning models such as deep learning architectures."
-source_url: github.com/massdriver-cloud/k8s-qdrant
-access: public
-type: infrastructure
-
+name: k8s-qdrant
+version: 1.0.0
+description: Qdrant is a vector similarity search engine. Vector databases are a relatively new way for interacting with abstract data representations derived from opaque machine learning models such as deep learning architectures.
+source_url: https://github.com/massdriver-cloud/k8s-qdrant
+type: application
 params:
   required:
-    - namespace
-    - database
+  - namespace
+  - database
   properties:
     namespace:
       type: string
@@ -21,16 +20,16 @@ params:
       type: object
       title: Database Configuration
       required:
-        - instance_configuration
-        - replica_configuration
+      - instance_configuration
+      - replica_configuration
       properties:
         instance_configuration:
           type: object
           title: Instance Configuration
           required:
-            - cpu_limit
-            - memory_limit
-            - storage_size
+          - cpu_limit
+          - memory_limit
+          - storage_size
           properties:
             cpu_limit:
               type: number
@@ -49,7 +48,7 @@ params:
               description: Unit is Gi. Decimal numbers are allowed. Value must be between 1 and 1000. **Cannot be changed after creation.**
               minimum: 1
               maximum: 1000
-              $md.immutable: true
+              "$md.immutable": true
         replica_configuration:
           type: object
           title: Replica Configuration
@@ -59,46 +58,49 @@ params:
               title: Replicas
               description: Number of replicas to create. Must be an integer between 1 and 5.
               enum:
-                - 1
-                - 2
-                - 3
-                - 4
-                - 5
-
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
 connections:
   required:
   - kubernetes_cluster
   properties:
     kubernetes_cluster:
-      $ref: massdriver/kubernetes-cluster
-
+      "$ref": massdriver/kubernetes-cluster
 artifacts:
   required:
-    - qdrant_authentication
+  - qdrant_authentication
   properties:
     qdrant_authentication:
-      $ref: massdriver/qdrant-authentication
-
+      "$ref": massdriver/qdrant-authentication
 ui:
   ui:order:
-    - namespace
-    - database
-    - "*"
+  - namespace
+  - database
+  - "*"
   database:
     ui:order:
-      - instance_configuration
-      - replica_configuration
-      - "*"
+    - instance_configuration
+    - replica_configuration
+    - "*"
     instance_configuration:
       ui:order:
-        - cpu_limit
-        - memory_limit
-        - storage_size
-        - "*"
+      - cpu_limit
+      - memory_limit
+      - storage_size
+      - "*"
       memory_limit:
         ui:field: conversionFieldData
         unit: Bytes
     replica_configuration:
       ui:order:
-        - replicas
-        - "*"
+      - replicas
+      - "*"
+steps:
+- path: src
+  provisioner: opentofu
+  config:
+    checkov:
+      enable: true
